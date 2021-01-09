@@ -9,9 +9,23 @@ from sys import argv as argument_val
 import requests
 from bs4 import BeautifulSoup
 from tqdm import tqdm
+import check_valid as check
+
 
 options = ["-help", "-start", "-tags"]
 common_use = "http://rule34.xxx/index.php?page=post&s=list&tags="
+version = "0.1.0"
+
+def main():
+    if argument_val[1].lower() not in options:
+        print("Command not found, use <-help> command if you need support.")
+    else:
+        if argument_val[1].lower() == "-start":
+            start()
+        elif argument_val[1].lower() == "-tags":
+            showlist()
+        else:
+            print(help())
 
 def replaceBlank(str):
     if " " in str:
@@ -50,11 +64,14 @@ def start():
     #Yeah, i know multiple return isn't a good practice...
     main_tag, get_url = inputMainTag()
     get_url = inputAdditionalTag(get_url)
-    confirm = input("Finally, the url will be like: %s \nConfirm? (Leave it empty if False)" %get_url).lower() or "no"
+    confirm = input("\nFinally, the url will be like: %s \nConfirm? (Leave it empty if False)..." %get_url).lower() or "no"
     if (confirm != "no"):
         # Process:
         # Find the last page -> set it as the goal and start running crawler process
         # -> download all of the links that exist in saved_links[]
+        main_tag = check.overwrite_invalid(main_tag)
+        # do it in order to prevent FileNotFound Error
+        
         last_page = get_lastPID(get_url)
         saved_links = launchCrawler(get_url, last_page)
         download(saved_links, main_tag)
@@ -85,7 +102,7 @@ def inputAdditionalTag(rule34page):
 
     while(running):
         try:
-            additional_tag = input("Insert the Additional Tags: (Leave it empty if None)").lower() or "no"
+            additional_tag = input("Insert the Additional Tags: (Leave it empty if None)...").lower() or "no"
             if (additional_tag == "no"):
                 running = False
             else:
@@ -108,22 +125,25 @@ def inputAdditionalTag(rule34page):
 def get_lastPID(get_url):
     # TODO : If only ONE page??
     #Default : Until the last page
-    request = requests.get(get_url)
-    soup = BeautifulSoup(request.text, "lxml")
-    find_last_page = soup.find("div", class_ = "pagination").find("a", alt="last page")["href"]
-    
-    regulation = re.compile(r"\d+")
-    lastPID = regulation.search(find_last_page)
-    result = int(lastPID.group())//42 + 1
+    try:
+        request = requests.get(get_url)
+        soup = BeautifulSoup(request.text, "lxml")
+        find_last_page = soup.find("div", class_ = "pagination").find("a", alt="last page")["href"]
+        
+        regulation = re.compile(r"\d+")
+        lastPID = regulation.search(find_last_page)
+        result = int(lastPID.group())//42 + 1
 
-    return result
-    #return the page number
+        return result
+    except(AttributeError, TypeError):
+        return 1
+         #return the page number "1" if beautifulsoup return EMPTY
 
 # =====
 
 def download(saved_links, main_tag):
     try:
-        if not os.path.exists(main_tag):
+        if not os.path.exists(main_tag  ):
             os.mkdir(main_tag)
         else:
             main_tag = main_tag + "(alter)"
@@ -175,17 +195,17 @@ def launchCrawler(current_page, last_page):
 
     return saved_links
 
-
-def main():
-    if argument_val[1].lower() not in options:
-        print("Command not found, use <-help> command if you need support.")
-    else:
-        if argument_val[1].lower() == "-start":
-            start()
-        elif argument_val[1].lower() == "-tags":
-            showlist()
-        else:
-            print(help())
-
 if __name__ == "__main__":
+    # check python version at beginning
+    major = sys.version_info[0]
+    minor = sys.version_info[1]
+    micro = sys.version_info[2]
+
+    python_ver = str(major)+"."+str(minor)+"."+str(minor)
+
+    if (major != 3 or (major == 3 and minor < 6)):
+        print("Corn34 requires Python3.6+, your version is ", python_ver, 
+            "\nVisit Python's official website and upgrate it before getting started.")
+        sys.exit(1)
+    
     main()
