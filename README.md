@@ -35,3 +35,41 @@ NO GIT BASH IN YOUR DESKTOP? [CLICK HERE TO DOWNLOAD.](https://git-scm.com/downl
             If you want to start your search from page 1 to page 10, of course, 
             you will have to insert number "10" as the range.
 ```
+
+# Demo
+
+```
+  $ H:\>cd "cli corn34"
+
+  $ H:\cli corn34>python corn34.py -start
+  =================================================
+
+  Let's get started from the MAIN TAG, should we?
+  (Empty for exit)...greem_bang
+
+  =================================================
+  Insert the Additional Tags: (Leave it empty if None)...bremerton_(azur_lane)
+  Insert the Additional Tags: (Leave it empty if None)...-3girls
+  Insert the Additional Tags: (Leave it empty if None)...looking_at_viewer
+  Insert the Additional Tags: (Leave it empty if None)...-censored
+  Insert the Additional Tags: (Leave it empty if None)...
+  =================================================
+
+  Finally, the url will be like: http://rule34.xxx/index.php?page=post&s=list&tags=greem_bang+bremerton_(azur_lane)+-3girls+looking_at_viewer+-censored
+  Confirm? (Leave it empty if False)...
+
+  =================================================
+  ...yes
+  
+  (...Start the crawling process)
+```
+
+# Useful Tags (in my opinion)
+
+Positive Tags | Negative Tags
+:------------:|:-------------:
+big breasts   |choke_hold
+looking at viewer|guro
+paizuri       |censored
+fellatio|absurdes
+fellatio under mask|futanari
