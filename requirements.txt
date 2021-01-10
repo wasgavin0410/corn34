@@ -3,3 +3,4 @@ bs4>=0.0.1
 requests>=2.22.0
 tqdm>=0.2.2
 lxml>=4.4.0
+prettytable>=2.0.0

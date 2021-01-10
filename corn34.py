@@ -12,7 +12,7 @@ from tqdm import tqdm
 import check_valid as check
 
 
-options = ["-help", "-start", "-tags"]
+options = ["-help", "-start", "-range"]
 common_use = "http://rule34.xxx/index.php?page=post&s=list&tags="
 version = "0.1.0"
 
@@ -21,9 +21,10 @@ def main():
         print("Command not found, use <-help> command if you need support.")
     else:
         if argument_val[1].lower() == "-start":
-            start()
-        elif argument_val[1].lower() == "-tags":
-            showlist()
+            if len(argument_val) == 3 and argument_val[2].lower() == "-range":
+                start(True)
+            else:
+                start(False)
         else:
             print(help())
 
@@ -51,20 +52,20 @@ def help():
             Also, add a \"-\" could make your insert tag became A Negative Tag,
             you can use it when trying to disable the categories you don't like to see.
 
-            You can also learn the commonly used tags by using <-tags> command. 
-
-        -tags :
-            Using this command, the most commonly used / not used will show in this window.
-            You can use it when you have no idea.
+        -start -range:
+            Using this command, you can add a range of your search result.
+            If you want to start your search from page 1 to page 10, of course, 
+            you will have to insert number "10" as the range.
 
 
     """
 
-def start():
+def start(if_range):
     #Yeah, i know multiple return isn't a good practice...
     main_tag, get_url = inputMainTag()
     get_url = inputAdditionalTag(get_url)
-    confirm = input("\nFinally, the url will be like: %s \nConfirm? (Leave it empty if False)..." %get_url).lower() or "no"
+    print("\nFinally, the url will be like: %s \nConfirm? (Leave it empty if False)..." %get_url)
+    confirm = input("\n=================================================\n...").lower() or "no"
     if (confirm != "no"):
         # Process:
         # Find the last page -> set it as the goal and start running crawler process
@@ -72,20 +73,25 @@ def start():
         main_tag = check.overwrite_invalid(main_tag)
         # do it in order to prevent FileNotFound Error
         
-        last_page = get_lastPID(get_url)
+        if (if_range == False):
+            last_page = get_lastPID(get_url)
+        else:
+            last_page = int(input("Insert a range of crawling...")) or 0
+            if last_page == 0:
+                print("Invalid range, system exits!")
+                sys.exit(1)
         saved_links = launchCrawler(get_url, last_page)
         download(saved_links, main_tag)
     else:   sys.exit()
-
-def showlist():
-    return "LIIIIIIIIST"
 
 # =====
 
 def inputMainTag():
     #return the first concated url
     try:
-        main_tag = input("Let's get started from the MAIN TAG, should we? (Empty for exit)...").lower() or "no"
+        print("=================================================")
+        main_tag = input("\nLet's get started from the MAIN TAG, should we?\n(Empty for exit)...").lower() or "no"
+        print("\n=================================================")
         if (main_tag == "no"):
             sys.exit()
         else:
@@ -98,7 +104,8 @@ def inputMainTag():
 
 def inputAdditionalTag(rule34page):
     running = True
-    add_array = [] 
+    add_array = []
+    
 
     while(running):
         try:
@@ -118,13 +125,13 @@ def inputAdditionalTag(rule34page):
         elem = "+" + replaceBlank(elem)
         rule34page += elem
 
+    print("=================================================")
     return rule34page
 
 # =====
 
 def get_lastPID(get_url):
-    # TODO : If only ONE page??
-    #Default : Until the last page
+
     try:
         request = requests.get(get_url)
         soup = BeautifulSoup(request.text, "lxml")
@@ -166,6 +173,7 @@ def download(saved_links, main_tag):
 def launchCrawler(current_page, last_page):
     basePID = 0
     saved_links = []
+    print("=================================================")
 
     for i in range(last_page):
         print("You're now at:", current_page)
