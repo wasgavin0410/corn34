@@ -30,9 +30,8 @@ NO GIT BASH IN YOUR DESKTOP? [CLICK HERE TO DOWNLOAD.](https://git-scm.com/downl
             Also, add a \"-\" could make your insert tag became A Negative Tag,
             you can use it when trying to disable the categories you don't like to see.
 
-            You can also learn the commonly used tags by using <-tags> command. 
-
-        -tags :
-            Using this command, the most commonly used / not used will show in this window.
-            You can use it when you have no idea.
+        -start -range:
+            Using this command, you can add a range of your search result.
+            If you want to start your search from page 1 to page 10, of course, 
+            you will have to insert number "10" as the range.
 ```
