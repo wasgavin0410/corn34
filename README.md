@@ -68,10 +68,13 @@ NO GIT BASH IN YOUR DESKTOP? [CLICK HERE TO DOWNLOAD.](https://git-scm.com/downl
 
 Positive Tags | Negative Tags
 :------------:|:-------------:
-big breasts   |choke_hold
-looking at viewer|guro
+vaginal penetration   |choke_hold (掐喉)
+looking at viewer|guro (獵奇)
 paizuri       |censored
-fellatio|absurdes
+fellatio|absurdes (誇張)
 fellatio under mask|futanari
-ahe gao|corruption
-///|transformation
+ahe gao|corruption (腐敗)
+pantyhose|transformation
+straddling(騎乘)|piercing (穿孔)
+///|pussy piercing
+///|pubic hair (pubic : 恥骨)
