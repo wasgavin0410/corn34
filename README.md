@@ -73,3 +73,5 @@ looking at viewer|guro
 paizuri       |censored
 fellatio|absurdes
 fellatio under mask|futanari
+ahe gao|corruption
+///|transformation
