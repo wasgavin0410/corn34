@@ -11,6 +11,8 @@ NO GIT BASH IN YOUR DESKTOP? [CLICK HERE TO DOWNLOAD.](https://git-scm.com/downl
   
   $ python3 -m pip install -r requirements.txt
   # Use the command to install the required libraries
+  
+  *** if the installation has not started, try "python" instead of "python3" *** 
 ```
 
 # Information
